@@ -1,3 +1,5 @@
+var helper = require('helper');
+
 var roleRepair = {
     
 run: function(creep) {
@@ -47,8 +49,7 @@ run: function(creep) {
             /////////////////////////////////////////////////////////////////////////////////////////////////////////
             //Send creep to source
             if(creep.harvest(sources[creep.memory.harSource]) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(sources[creep.memory.harSource]);
-                //creep.say('move to ' + creep.memory.harSource)
+                helper.routeCreep(creep,sources[creep.memory.harSource]);
             }
             
         } else {
@@ -77,7 +78,7 @@ run: function(creep) {
                 //Damaged structure found, move and repair
                 var resp = creep.repair(target)
                 if(resp == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(target);
+                    helper.routeCreep(creep,target);
                 } else if (resp == OK) {
                     creep.say('Repairing')
                 }
@@ -87,14 +88,14 @@ run: function(creep) {
                 var targetTwo = creep.pos.findClosestByRange(FIND_CONSTRUCTION_SITES);
                 if (targetTwo == null) {
                     var target = creep.pos.findClosestByRange(FIND_STRUCTURES, { filter: (structure) => { return (structure.structureType == STRUCTURE_SPAWN); } });
-                    creep.moveTo(target);
+                    helper.routeCreep(creep,target);
                 } else {
                     creep.say('building')
                     if(creep.build(targetTwo) == ERR_NOT_IN_RANGE)
                     {
                         /////////////////////////////////////////////////////////////////////////////////////////////////////////
                         //Buildable structures found, deploy
-                        creep.moveTo(targetTwo);
+                        helper.routeCreep(creep,targetTwo);
                     }
                 }
             }

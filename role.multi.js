@@ -1,3 +1,5 @@
+var helper = require('helper');
+
 var roleMulti = {
 
     /** @param {Creep} creep **/
@@ -56,7 +58,7 @@ var roleMulti = {
             //Send creep to source
             if(sourceFound == true) {
                 if(creep.harvest(sources[creep.memory.harSource]) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(sources[creep.memory.harSource]);
+                    helper.routeCreep(creep,sources[creep.memory.harSource]);
                     //creep.say('move to ' + creep.memory.harSource)
                 }
             } else {
@@ -84,7 +86,7 @@ var roleMulti = {
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////
                 //Structures found, deposit energy
                 if(creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                    creep.moveTo(target);
+                    helper.routeCreep(creep,target);
                 }
             } else {
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -94,12 +96,12 @@ var roleMulti = {
                 {
                     /////////////////////////////////////////////////////////////////////////////////////////////////////////
                     //Buildable structures found, deploy
-                    creep.moveTo(targetTwo);
+                    helper.routeCreep(creep,targetTwo);
                 } else if(creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
                     /////////////////////////////////////////////////////////////////////////////////////////////////////////
                     //No other actions, upgrade controller, if energy is full
                     if(creep.carry.energy == creep.carryCapacity){
-                        creep.moveTo(creep.room.controller);
+                        helper.routeCreep(creep,creep.room.controller);
                     } else {
                         creep.memory.working = false;
                     }

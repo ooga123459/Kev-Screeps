@@ -11,7 +11,7 @@ var tower = require('tower');
 module.exports.loop = function () {
     var maxMulti = 0;
     var maxRepair = 2;
-    var maxHarvester = 8;
+    var maxHarvester = 7;
     var maxUpgrader = 4;
     
     for(var name in Memory.creeps)
