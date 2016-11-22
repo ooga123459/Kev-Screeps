@@ -1,8 +1,3 @@
-var maxMulti = 0;
-var maxRepair = 2;
-var maxHarvester = 4;
-var maxUpgrader = 4;
-         
 var helper = require('helper');
 
 var roleMulti = require('role.multi');
@@ -14,14 +9,17 @@ var newCostMatrix = require('newCostMatrix');
 var tower = require('tower');
 
 module.exports.loop = function () {
-    //console.log('tick')
+    var maxMulti = 0;
+    var maxRepair = 2;
+    var maxHarvester = 8;
+    var maxUpgrader = 4;
     
     for(var name in Memory.creeps)
     {
         if(!Game.creeps[name])
         {
             delete Memory.creeps[name];
-            console.log('Clearing non-existing creep memory:', name);
+            console.log('Clearing non-existing creep from memory:', name);
         }
     }
     
