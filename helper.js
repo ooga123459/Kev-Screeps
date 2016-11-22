@@ -1,4 +1,211 @@
 module.exports = {
+    maxCreep: function(curRoom,role){
+        var target = curRoom.find(FIND_STRUCTURES, { filter: (structure) => { return (structure.structureType == STRUCTURE_CONTROLLER ); } });
+        if (target[0]==null){ return false;}
+        switch (target[0].level) {
+                case (0):
+                    switch (role){
+                        case ('multi'):
+                            return 0;
+                            break;
+                        case ('repair'):
+                            return 0;
+                            break;
+                        case ('harvester'):
+                            return 0;
+                            break;
+                        case ('upgrader'):
+                            return 0;
+                            break;
+                        case ('claimer'):
+                            return 0;
+                            break;
+                        default:
+                            return false;
+                            break;
+                    }
+                    break;
+                case (1):
+                    switch (role){
+                        case ('multi'):
+                            return 0;
+                            break;
+                        case ('repair'):
+                            return 2;
+                            break;
+                        case ('harvester'):
+                            return 4;
+                            break;
+                        case ('upgrader'):
+                            return 4;
+                            break;
+                        case ('claimer'):
+                            return 0;
+                            break;
+                        default:
+                            return false;
+                            break;
+                    }
+                    break;
+                case (2):
+                    switch (role){
+                        case ('multi'):
+                            return 2;
+                            break;
+                        case ('repair'):
+                            return 2;
+                            break;
+                        case ('harvester'):
+                            return 6;
+                            break;
+                        case ('upgrader'):
+                            return 6;
+                            break;
+                        case ('claimer'):
+                            return 0;
+                            break;
+                        default:
+                            return false;
+                            break;
+                    }
+                    break;
+                case (3):
+                    switch (role){
+                        case ('multi'):
+                            return 2;
+                            break;
+                        case ('repair'):
+                            return 2;
+                            break;
+                        case ('harvester'):
+                            return 6;
+                            break;
+                        case ('upgrader'):
+                            return 6;
+                            break;
+                        case ('claimer'):
+                            return 0;
+                            break;
+                        default:
+                            return false;
+                            break;
+                    }
+                    break;
+                case (4):
+                    switch (role){
+                        case ('multi'):
+                            return 2;
+                            break;
+                        case ('repair'):
+                            return 2;
+                            break;
+                        case ('harvester'):
+                            return 6;
+                            break;
+                        case ('upgrader'):
+                            return 6;
+                            break;
+                        case ('claimer'):
+                            return 0;
+                            break;
+                        default:
+                            return false;
+                            break;
+                    }
+                    break;
+                case (5):
+                    switch (role){
+                        case ('multi'):
+                            return 2;
+                            break;
+                        case ('repair'):
+                            return 2;
+                            break;
+                        case ('harvester'):
+                            return 6;
+                            break;
+                        case ('upgrader'):
+                            return 6;
+                            break;
+                        case ('claimer'):
+                            return 0;
+                            break;
+                        default:
+                            return false;
+                            break;
+                    }
+                    break;
+                case (6):
+                    switch (role){
+                        case ('multi'):
+                            return 2;
+                            break;
+                        case ('repair'):
+                            return 2;
+                            break;
+                        case ('harvester'):
+                            return 5;
+                            break;
+                        case ('upgrader'):
+                            return 5;
+                            break;
+                        case ('claimer'):
+                            return 0;
+                            break;
+                        default:
+                            return false;
+                            break;
+                    }
+                    break;
+                case (7):
+                    switch (role){
+                        case ('multi'):
+                            return 2;
+                            break;
+                        case ('repair'):
+                            return 2;
+                            break;
+                        case ('harvester'):
+                            return 5;
+                            break;
+                        case ('upgrader'):
+                            return 5;
+                            break;
+                        case ('claimer'):
+                            return 0;
+                            break;
+                        default:
+                            return false;
+                            break;
+                    }
+                    break;
+                case (8):
+                    switch (role){
+                        case ('multi'):
+                            return 2;
+                            break;
+                        case ('repair'):
+                            return 2;
+                            break;
+                        case ('harvester'):
+                            return 5;
+                            break;
+                        case ('upgrader'):
+                            return 5;
+                            break;
+                        case ('claimer'):
+                            return 0;
+                            break;
+                        default:
+                            return false;
+                            break;
+                    }
+                    break;
+                default:
+                    return false;
+                    break;
+            }
+    },
 	maxEnergy: function(curRoom){
 		try
 		{

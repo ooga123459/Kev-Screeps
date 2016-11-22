@@ -10,12 +10,6 @@ var roleClaimer = require('role.claimer');
 var tower = require('tower');
 
 module.exports.loop = function () {
-    var maxMulti = 0;
-    var maxRepair = 6;
-    var maxHarvester = 6;
-    var maxUpgrader = 4;
-    var maxClaimer = 0;
-    
     for(var name in Memory.creeps)
     {
         if(!Game.creeps[name])
@@ -31,28 +25,29 @@ module.exports.loop = function () {
         var curRoom = Game.rooms[rm]
         var spawn = curRoom.find(FIND_STRUCTURES, {filter: { structureType: STRUCTURE_SPAWN } })
         //newCostMatrix.run(spawn);
-        var multi = _.filter(Game.creeps, (creep) => creep.memory.role == 'multi');
-        var repair = _.filter(Game.creeps, (creep) => creep.memory.role == 'repair');
-        var harvester = _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester');
-        var upgrader = _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader');
-        var claimer = _.filter(Game.creeps, (creep) => creep.memory.role == 'claimer');
+        
+        var multi = _.filter(Game.creeps, (creep) => creep.memory.role == 'multi' && curRoom.name == creep.room.name);
+        var repair = _.filter(Game.creeps, (creep) => creep.memory.role == 'repair' && curRoom.name == creep.room.name);
+        var harvester = _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester' && curRoom.name == creep.room.name);
+        var upgrader = _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader' && curRoom.name == creep.room.name);
+        var claimer = _.filter(Game.creeps, (creep) => creep.memory.role == 'claimer' && curRoom.name == creep.room.name);
         if (spawn[0] != null) {
-            if (multi.length<maxMulti || repair.length<maxRepair || harvester.length<maxHarvester || upgrader.length<maxUpgrader) {
-                console.log(rm + '-- Multi:' + multi.length + '/' + maxMulti + ', Harvester:' + harvester.length + '/' + maxHarvester + ', Repair:' + repair.length + '/' + maxRepair + ', Upgrader:' + upgrader.length + '/' + maxUpgrader + ', Claimer:' + claimer.length + '/' + maxClaimer +', Total Creeps:' + _.filter(Game.creeps).length);
+            if (multi.length<helper.maxCreep(curRoom,'multi') || repair.length<helper.maxCreep(curRoom,'repair') || harvester.length<helper.maxCreep(curRoom,'harvester') || upgrader.length<helper.maxCreep(curRoom,'upgrader') || claimer.length<helper.maxCreep(curRoom,'claimer')) {
+                console.log(rm + '-- Multi:' + multi.length + '/' + helper.maxCreep(curRoom,'multi') + ', Harvester:' + harvester.length + '/' + helper.maxCreep(curRoom,'harvester') + ', Repair:' + repair.length + '/' + helper.maxCreep(curRoom,'repair') + ', Upgrader:' + upgrader.length + '/' + helper.maxCreep(curRoom,'upgrader') + ', Claimer:' + claimer.length + '/' + helper.maxCreep(curRoom,'claimer') +', Total Creeps:' + _.filter(Game.creeps, (creep) => curRoom.name == creep.room.name).length);
             }
-            if(multi.length < maxMulti) {
+            if(multi.length < helper.maxCreep(curRoom,'multi')) {
                 var newName = spawn[0].createCreep(helper.calcBody(curRoom,'role.multi'), undefined, {role: 'multi'});
                 if (_.isString(newName)) { console.log('Spawning new multi: ' + newName); }
-            } else if(harvester.length < maxHarvester) {
+            } else if(harvester.length < helper.maxCreep(curRoom,'harvester')) {
                 var newName = spawn[0].createCreep(helper.calcBody(curRoom,'role.harvester'), undefined, {role: 'harvester'});
                 if (_.isString(newName)) { console.log('Spawning new harvester: ' + newName); }
-            } else if(repair.length < maxRepair) {
+            } else if(repair.length < helper.maxCreep(curRoom,'repair')) {
                 var newName = spawn[0].createCreep(helper.calcBody(curRoom,'role.repair'), undefined, {role: 'repair'});
                 if (_.isString(newName)) {console.log('Spawning new repair: ' + newName); }
-            } else if(upgrader.length < maxUpgrader) {
+            } else if(upgrader.length < helper.maxCreep(curRoom,'upgrader')) {
                 var newName = spawn[0].createCreep(helper.calcBody(curRoom,'role.upgrader'), undefined, {role: 'upgrader'});
                 if (_.isString(newName)) { console.log('Spawning new upgrader: ' + newName); }
-            } else if(claimer.length < maxClaimer) {
+            } else if(claimer.length < helper.maxCreep(curRoom,'claimer')) {
                 var newName = spawn[0].createCreep([CLAIM,CLAIM,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], undefined, {role: 'claimer'});
                 //console.log('newname '+newName)
                 if (_.isString(newName)) { console.log('Spawning new claimer: ' + newName); }
