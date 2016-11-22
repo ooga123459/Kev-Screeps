@@ -84,11 +84,23 @@ run: function(creep) {
                 }
             } else {
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////
-                //10% Damaged structure not found, try to build, and as last resort, move to spawn point
+                //Damaged structure not found, try to build, and as last resort, move to spawn point
                 var targetTwo = creep.pos.findClosestByRange(FIND_CONSTRUCTION_SITES);
                 if (targetTwo == null) {
-                    var target = creep.pos.findClosestByRange(FIND_STRUCTURES, { filter: (structure) => { return (structure.structureType == STRUCTURE_SPAWN); } });
-                    creep.moveTo(target);
+                    var moveToConsSpawn = ""
+                    for(var rm in Game.rooms){
+                        var curRoom = Game.rooms[rm]
+                        var spawn = Game.rooms[rm].find(FIND_CONSTRUCTION_SITES, { filter: (structure) => { return (structure.structureType == STRUCTURE_SPAWN); } })
+                        if (spawn[0] != null) {
+                            moveToConsSpawn = spawn[0]
+                        }
+                    }
+                    if (moveToConsSpawn != ""){
+                        creep.moveTo(moveToConsSpawn);
+                    } else {
+                        var target = creep.pos.findClosestByRange(FIND_STRUCTURES, { filter: (structure) => { return (structure.structureType == STRUCTURE_SPAWN); } });
+                        creep.moveTo(target);
+                    }
                 } else {
                     creep.say('building')
                     if(creep.build(targetTwo) == ERR_NOT_IN_RANGE)
