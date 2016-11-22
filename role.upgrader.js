@@ -59,7 +59,7 @@ var roleMulti = {
                 //Send creep to source
                 if(sourceFound == true) {
                     if(creep.harvest(sources[creep.memory.harSource]) == ERR_NOT_IN_RANGE) {
-                        helper.routeCreep(creep,sources[creep.memory.harSource]);
+                        creep.moveTo(sources[creep.memory.harSource]);
                     }
                 } else {
                     //No source energy avail, attempt to work
@@ -71,7 +71,7 @@ var roleMulti = {
                 //Pull energy from storage (preferred)
                 
                 if(creep.withdraw(storage,RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                        helper.routeCreep(creep,storage);
+                        creep.moveTo(storage);
                 }
             }
         } else {
@@ -81,7 +81,7 @@ var roleMulti = {
             creep.memory.harSource = -1;
 
             if(creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
-                helper.routeCreep(creep,creep.room.controller);
+                creep.moveTo(creep.room.controller);
             }
         }
     }

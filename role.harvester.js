@@ -59,14 +59,14 @@ var roleMulti = {
             var dropenergy = creep.pos.findClosestByPath(FIND_DROPPED_ENERGY, { filter: (d) => {return (d.resourceType == RESOURCE_ENERGY)} });
             if (dropenergy) {
                 if (creep.pickup(dropenergy) == ERR_NOT_IN_RANGE) {
-                    helper.routeCreep(creep,dropenergy);
+                    creep.moveTo(dropenergy);
                 }
             } else {
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////
                 //Send creep to source
                 if(sourceFound == true) {
                     if(creep.harvest(sources[creep.memory.harSource]) == ERR_NOT_IN_RANGE) {
-                        helper.routeCreep(creep,sources[creep.memory.harSource]);
+                        creep.moveTo(sources[creep.memory.harSource]);
                     }
                 } else {
                     //No source energy avail, attempt to work
@@ -98,7 +98,7 @@ var roleMulti = {
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////
                 //Structures found, deposit energy
                 if(creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                    helper.routeCreep(creep,target);
+                    creep.moveTo(target);
                 }
             } else {
                 //move to an extension
@@ -108,7 +108,7 @@ var roleMulti = {
                                                                 }
                                                             });
                 if(targetTwo != null) {
-                    helper.routeCreep(creep,targetTwo);
+                    creep.moveTo(targetTwo);
                 }
                 
             }

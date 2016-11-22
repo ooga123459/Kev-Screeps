@@ -58,7 +58,7 @@ var roleMulti = {
             //Send creep to source
             if(sourceFound == true) {
                 if(creep.harvest(sources[creep.memory.harSource]) == ERR_NOT_IN_RANGE) {
-                    helper.routeCreep(creep,sources[creep.memory.harSource]);
+                    creep.moveTo(sources[creep.memory.harSource]);
                     //creep.say('move to ' + creep.memory.harSource)
                 }
             } else {
@@ -86,7 +86,7 @@ var roleMulti = {
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////
                 //Structures found, deposit energy
                 if(creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                    helper.routeCreep(creep,target);
+                    creep.moveTo(target);
                 }
             } else {
                 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -96,12 +96,12 @@ var roleMulti = {
                 {
                     /////////////////////////////////////////////////////////////////////////////////////////////////////////
                     //Buildable structures found, deploy
-                    helper.routeCreep(creep,targetTwo);
+                    creep.moveTo(targetTwo);
                 } else if(creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
                     /////////////////////////////////////////////////////////////////////////////////////////////////////////
                     //No other actions, upgrade controller, if energy is full
                     if(creep.carry.energy == creep.carryCapacity){
-                        helper.routeCreep(creep,creep.room.controller);
+                        creep.moveTo(creep.room.controller);
                     } else {
                         creep.memory.working = false;
                     }
