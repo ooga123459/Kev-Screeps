@@ -37,16 +37,16 @@ module.exports.loop = function () {
             }
             if(multi.length < helper.maxCreep(curRoom,'multi')) {
                 var newName = spawn[0].createCreep(helper.calcBody(curRoom,'role.multi'), undefined, {role: 'multi'});
-                if (_.isString(newName)) { console.log('Spawning new multi: ' + newName); }
+                if (_.isString(newName)) { console.log('Spawning new multi in'+ curRoom.name +': ' + newName); }
             } else if(harvester.length < helper.maxCreep(curRoom,'harvester')) {
                 var newName = spawn[0].createCreep(helper.calcBody(curRoom,'role.harvester'), undefined, {role: 'harvester'});
-                if (_.isString(newName)) { console.log('Spawning new harvester: ' + newName); }
+                if (_.isString(newName)) { console.log('Spawning new harvester in'+ curRoom.name +': ' + newName); }
             } else if(repair.length < helper.maxCreep(curRoom,'repair')) {
                 var newName = spawn[0].createCreep(helper.calcBody(curRoom,'role.repair'), undefined, {role: 'repair'});
-                if (_.isString(newName)) {console.log('Spawning new repair: ' + newName); }
+                if (_.isString(newName)) {console.log('Spawning new repair in'+ curRoom.name +': ' + newName); }
             } else if(upgrader.length < helper.maxCreep(curRoom,'upgrader')) {
                 var newName = spawn[0].createCreep(helper.calcBody(curRoom,'role.upgrader'), undefined, {role: 'upgrader'});
-                if (_.isString(newName)) { console.log('Spawning new upgrader: ' + newName); }
+                if (_.isString(newName)) { console.log('Spawning new upgrader in'+ curRoom.name +': ' + newName); }
             } else if(claimer.length < helper.maxCreep(curRoom,'claimer')) {
                 var newName = spawn[0].createCreep([CLAIM,CLAIM,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE], undefined, {role: 'claimer'});
                 //console.log('newname '+newName)

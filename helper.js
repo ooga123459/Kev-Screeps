@@ -28,10 +28,10 @@ module.exports = {
                 case (1):
                     switch (role){
                         case ('multi'):
-                            return 0;
+                            return 2;
                             break;
                         case ('repair'):
-                            return 2;
+                            return 4;
                             break;
                         case ('harvester'):
                             return 4;
@@ -53,7 +53,7 @@ module.exports = {
                             return 2;
                             break;
                         case ('repair'):
-                            return 2;
+                            return 4;
                             break;
                         case ('harvester'):
                             return 6;
