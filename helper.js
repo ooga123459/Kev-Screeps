@@ -144,7 +144,7 @@ module.exports = {
                             return 2;
                             break;
                         case ('harvester'):
-                            return 5;
+                            return 3;
                             break;
                         case ('upgrader'):
                             return 5;
