@@ -24,14 +24,14 @@ module.exports.loop = function () {
     for(var rm in Game.rooms){
         var curRoom = Game.rooms[rm]
         var spawn = curRoom.find(FIND_STRUCTURES, {filter: { structureType: STRUCTURE_SPAWN } })
-        //newCostMatrix.run(spawn);
-        
+        helper.buildRoads(curRoom);
         var multi = _.filter(Game.creeps, (creep) => creep.memory.role == 'multi' && curRoom.name == creep.room.name);
         var repair = _.filter(Game.creeps, (creep) => creep.memory.role == 'repair' && curRoom.name == creep.room.name);
         var harvester = _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester' && curRoom.name == creep.room.name);
         var upgrader = _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader' && curRoom.name == creep.room.name);
         var claimer = _.filter(Game.creeps, (creep) => creep.memory.role == 'claimer' && curRoom.name == creep.room.name);
         if (spawn[0] != null) {
+            newCostMatrix.run(spawn[0]);
             if (multi.length<helper.maxCreep(curRoom,'multi') || repair.length<helper.maxCreep(curRoom,'repair') || harvester.length<helper.maxCreep(curRoom,'harvester') || upgrader.length<helper.maxCreep(curRoom,'upgrader') || claimer.length<helper.maxCreep(curRoom,'claimer')) {
                 console.log(rm + '-- Multi:' + multi.length + '/' + helper.maxCreep(curRoom,'multi') + ', Harvester:' + harvester.length + '/' + helper.maxCreep(curRoom,'harvester') + ', Repair:' + repair.length + '/' + helper.maxCreep(curRoom,'repair') + ', Upgrader:' + upgrader.length + '/' + helper.maxCreep(curRoom,'upgrader') + ', Claimer:' + claimer.length + '/' + helper.maxCreep(curRoom,'claimer') +', Total Creeps:' + _.filter(Game.creeps, (creep) => curRoom.name == creep.room.name).length);
             }
@@ -54,8 +54,9 @@ module.exports.loop = function () {
             }
             
             //if all creeps died, spawn the worst possible one to get things going again
-            if(_.filter(Game.creeps) == null) {
-                var newName = spawn[0].createCreep([MOVE,WORK,CARRY], undefined, {role: 'multi'});
+            //console.log(_.filter(Game.creeps, (c) => curRoom.name==creep.room.name))
+            if(_.filter(Game.creeps, (creep) => curRoom.name == creep.room.name).length == 0) {
+                var newName = spawn[0].createCreep([MOVE,MOVE,WORK,CARRY,CARRY], undefined, {role: 'multi'});
                 if (_.isString(newName)) { console.log('Spawning new multi in '+ curRoom.name +': ' + newName); }
             }
         }

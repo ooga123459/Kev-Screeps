@@ -1,4 +1,73 @@
 module.exports = {
+    buildRoads: function(curRoom){
+        /*
+        ├ 	OwnedStructure 
+        │ 	├ 	StructureController --yes
+        │ 	├ 	StructureExtension --yes
+        │ 	├ 	StructureExtractor --yes
+        │ 	├ 	StructureKeeperLair --no
+        │ 	├ 	StructureLab --yes
+        │ 	├ 	StructureLink --yes
+        │ 	├ 	StructureNuker --yes
+        │ 	├ 	StructureObserver --no
+        │ 	├ 	StructurePowerBank --no
+        │ 	├ 	StructurePowerSpawn --no
+        │ 	├ 	StructureRampart --no
+        │ 	├ 	StructureSpawn --yes
+        │ 	├ 	StructureStorage --yes
+        │ 	├ 	StructureTerminal --yes
+        │ 	└ 	StructureTower --yes
+        ├ 	StructureContainer --yes
+      	├ 	StructurePortal  --no
+      	├ 	StructureRoad --no
+      	└ 	StructureWall --no
+      	
+      	also include sources
+        */
+        if (curRoom == null) { return false; }
+        var structs = curRoom.find(FIND_STRUCTURES, { filter: (s) => { return (s.structureType == STRUCTURE_CONTROLLER || s.structureType == STRUCTURE_EXTENSION || s.structureType == STRUCTURE_EXTRACTOR || s.structureType == STRUCTURE_LAB
+                                                                                 || s.structureType == STRUCTURE_LINK || s.structureType == STRUCTURE_NUKER || s.structureType == STRUCTURE_SPAWN || s.structureType == STRUCTURE_STORAGE
+                                                                                 || s.structureType == STRUCTURE_TERMINAL || s.structureType == STRUCTURE_TOWER || s.structureType == STRUCTURE_CONTAINER); } });
+        var sources = curRoom.find(FIND_SOURCES);
+    
+        var positions = structs.concat(sources);
+        //console.log(curRoom.name + ': '+ positions.length);
+        
+        var randOne = Math.floor((Math.random() * positions.length) + 0);
+        var randTwo = Math.floor((Math.random() * positions.length) + 0);
+        //console.log(randOne + '    '+ randTwo)
+        if (randOne!=randTwo){
+            //console.log('1: '+positions[randOne] + ', 2: ' +positions[randTwo])
+            var path = curRoom.findPath(positions[randOne].pos,positions[randTwo].pos, {ignoreRoads: true, heuristicWeight: 1000});
+            for (var i in path){
+                var cons = curRoom.createConstructionSite(path[i].x,path[i].y,STRUCTURE_ROAD);
+                if (cons == ERR_FULL){
+                    break;
+                }
+            }
+            return true;
+        } else {
+            return false;
+        }
+        
+        /*for (var posOne in positions) {
+            for (var posTwo in positions) {
+                if (posOne == posTwo) {
+                    //Build Road 1 block around structure
+                    //lookForAt
+                } else {
+                    var path = curRoom.findPath(posOne,posTwo, {ignoreRoads: true});
+                    console.log(path);
+                    if (path != null) {
+                        for (var i in path) {
+                            //var cons = curRoom.createConstructionSite(i.x,i.y,STRUCTURE_ROAD);
+                        }
+                    }
+                }
+            }
+        }*/
+        
+    },
     maxCreep: function(curRoom,role){
         var target = curRoom.find(FIND_STRUCTURES, { filter: (structure) => { return (structure.structureType == STRUCTURE_CONTROLLER ); } });
         if (target[0]==null){ return false;}
@@ -150,7 +219,7 @@ module.exports = {
                             return 5;
                             break;
                         case ('claimer'):
-                            return 0;
+                            return 1;
                             break;
                         default:
                             return false;
