@@ -41,8 +41,6 @@ module.exports.loop = function () {
             //determine name... dupes... need to find available #
             
             if (creepType!=''){
-                console.log(rm + '-- Multi:' + multi.length + '/' + helper.maxCreep(curRoom,'multi') + ', Harvester:' + harvester.length + '/' + helper.maxCreep(curRoom,'harvester') + ', Repair:' + repair.length + '/' + helper.maxCreep(curRoom,'repair') + ', Upgrader:' + upgrader.length + '/' + helper.maxCreep(curRoom,'upgrader') + ', Claimer:' + claimer.length + '/' + helper.maxCreep(curRoom,'claimer') +', Total Creeps:' + _.filter(Game.creeps, (creep) => curRoom.name == creep.room.name).length);
-                
                 var cnt = 0;
                 for (var i = 1; i<=helper.maxCreep(curRoom,creepType); i++){
                     if(!Game.creeps[curRoom.name + '.' + helper.toTitleCase(creepType) + String(i)]) {
@@ -52,9 +50,10 @@ module.exports.loop = function () {
                 }
                 var newName = spawn[0].createCreep(helper.calcBody(curRoom,'role.'+creepType), curRoom.name + '.' + helper.toTitleCase(creepType) + String(cnt), {role: creepType, home: curRoom.name});
                 if (_.isString(newName)) {
-                    console.log('Spawning new ' + creepType + ' in '+ curRoom.name +': ' + newName); 
+                    console.log(rm + '-- Multi:' + multi.length + '/' + helper.maxCreep(curRoom,'multi') + ', Harvester:' + harvester.length + '/' + helper.maxCreep(curRoom,'harvester') + ', Repair:' + repair.length + '/' + helper.maxCreep(curRoom,'repair') + ', Upgrader:' + upgrader.length + '/' + helper.maxCreep(curRoom,'upgrader') + ', Claimer:' + claimer.length + '/' + helper.maxCreep(curRoom,'claimer') +', Total Creeps:' + _.filter(Game.creeps, (creep) => curRoom.name == creep.room.name).length);
+                    console.log('Spawning new ' + creepType + ' in room '+ curRoom.name +' named: ' + newName); 
                 } else if (newName == -3) {
-                    console.log("Can't spawn " + creepType + ": " + newName);
+                    console.log("Can't spawn " + creepType + " in room " +curRoom.name+ " because the creep name is taken already!");
                 }
                 
             }
