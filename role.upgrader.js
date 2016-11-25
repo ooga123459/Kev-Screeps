@@ -45,8 +45,9 @@ var roleMulti = {
                         }
                     }
                     //console.log('LowestCreepSource: ' +lowestCreepSource)
-                    creep.memory.harSource = lowestCreepSource;
-                    
+                    if(creep.memory.harSource == -1 || sources[creep.memory.harSource].energy==0){
+                        creep.memory.harSource = lowestCreepSource;
+                    }                    
                     var sourceFound = false;
                     for (i = 0; i < sources.length; i++) {
                         if (sources[i].energy > 0) {

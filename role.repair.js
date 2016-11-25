@@ -44,15 +44,16 @@ run: function(creep) {
                     }
                 }
                 //console.log('LowestCreepSource: ' +lowestCreepSource)
-                creep.memory.harSource = lowestCreepSource;
-            }
+                if(creep.memory.harSource == -1 || sources[creep.memory.harSource].energy==0){
+                    creep.memory.harSource = lowestCreepSource;
+                }            }
             /////////////////////////////////////////////////////////////////////////////////////////////////////////
             //Send creep to source
             if(creep.harvest(sources[creep.memory.harSource]) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(sources[creep.memory.harSource]);
             } else if (creep.carry.energy == 0) {
                 //move to bored flag
-                console.log(creep.room.name + ' Repair moving to bored')
+                //console.log(creep.room.name + ' Repair moving to bored')
                 for (var flag in Game.flags){
                     if (Game.flags[flag].pos.roomName == creep.room.name && creep.room.name.substring(0,5) == 'Bored') {
                         creep.moveTo(Game.flags[flag]);

@@ -188,13 +188,13 @@ module.exports = {
                             return 2;
                             break;
                         case ('repair'):
-                            return 2;
+                            return 4;
                             break;
                         case ('harvester'):
-                            return 6;
+                            return 4;
                             break;
                         case ('upgrader'):
-                            return 6;
+                            return 4;
                             break;
                         case ('claimer'):
                             return 0;
@@ -210,16 +210,16 @@ module.exports = {
                             return 2;
                             break;
                         case ('repair'):
-                            return 2;
+                            return 4;
                             break;
                         case ('harvester'):
-                            return 3;
+                            return 4;
                             break;
                         case ('upgrader'):
-                            return 5;
+                            return 4;
                             break;
                         case ('claimer'):
-                            return 1;
+                            return 0;
                             break;
                         default:
                             return false;
@@ -229,16 +229,16 @@ module.exports = {
                 case (7):
                     switch (role){
                         case ('multi'):
-                            return 2;
+                            return 0;
                             break;
                         case ('repair'):
                             return 2;
                             break;
                         case ('harvester'):
-                            return 5;
+                            return 3;
                             break;
                         case ('upgrader'):
-                            return 5;
+                            return 3;
                             break;
                         case ('claimer'):
                             return 0;
@@ -251,16 +251,16 @@ module.exports = {
                 case (8):
                     switch (role){
                         case ('multi'):
-                            return 2;
+                            return 0;
                             break;
                         case ('repair'):
                             return 2;
                             break;
                         case ('harvester'):
-                            return 5;
+                            return 3;
                             break;
                         case ('upgrader'):
-                            return 5;
+                            return 3;
                             break;
                         case ('claimer'):
                             return 0;
