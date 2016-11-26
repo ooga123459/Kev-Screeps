@@ -163,7 +163,7 @@ module.exports = {
                             return 2;
                             break;
                         case ('repair'):
-                            return 4;
+                            return 6;
                             break;
                         case ('harvester'):
                             return 6;
