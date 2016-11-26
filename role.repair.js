@@ -46,7 +46,9 @@ run: function(creep) {
                 //console.log('LowestCreepSource: ' +lowestCreepSource)
                 if(creep.memory.harSource == -1 || sources[creep.memory.harSource].energy==0){
                     creep.memory.harSource = lowestCreepSource;
-                }            }
+                    
+                }
+                }
             /////////////////////////////////////////////////////////////////////////////////////////////////////////
             //Send creep to source
             if(creep.harvest(sources[creep.memory.harSource]) == ERR_NOT_IN_RANGE) {
@@ -60,7 +62,7 @@ run: function(creep) {
                         break;
                     }
                 }
-            } else {
+            } else if (sources[creep.memory.harSource].energy==0 || creep.carry.energy==creep.carry.energyCapacity) {
                 //No source energy avail, attempt to work
                 creep.memory.working = true;
                 creep.memory.harSource = -1;
@@ -69,6 +71,7 @@ run: function(creep) {
         } else {
             /////////////////////////////////////////////////////////////////////////////////////////////////////////
             //Harvesting complete.  Reinit and distribute to task
+            
             creep.memory.working = true;
             creep.memory.harSource = -1;
             
@@ -110,7 +113,19 @@ run: function(creep) {
                         }
                     }
                     if (moveToConsSpawn != ""){
-                        creep.moveTo(moveToConsSpawn);
+                        console.log(creep.name + ' IS HEADING TO REPAIR NEW CONTROLLER!!! (lookout!)')
+                        
+                        //creep.moveTo(moveToConsSpawn, {avoid: helper.getAvoidedArea(creep.room)});
+                        creep.moveTo(moveToConsSpawn, {costCallback: function(roomName, costMatrix) {
+                                                            var avo = helper.getAvoidedArea(creep.room);
+                                                            roomName = creep.room.name;
+                                                            for (var p in avo){
+                                                                //console.log(avo[p].x + ', ' + avo[p].y);
+                                                                costMatrix.set(avo[p].x,avo[p].y,255);
+                                                            }
+                                                        }
+                            
+                        })
                     }
                 } else {
                     creep.say('building')

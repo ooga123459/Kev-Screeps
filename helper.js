@@ -1,4 +1,24 @@
 module.exports = {
+    getAvoidedArea: function(curRoom) {
+        var enemies = curRoom.find(FIND_HOSTILE_CREEPS);
+        var avoidPosArray= [];
+        //console.log('enemies.length '+enemies.length)
+		for(var i = 0; i < enemies.length; i++) {
+			var startPosX = enemies[i].pos.x;
+			var startPosY = enemies[i].pos.y;
+
+			for(var j = -7; j < 7; j++) {
+		        for(var i = -7; i < 7; i++) {
+		            avoidPosArray.push({ x: startPosX+j, y: startPosY+i });
+		        }
+		    }
+
+		}
+		console.log(JSON.stringify(avoidPosArray));
+        return avoidPosArray;
+    },
+    
+    
     buildRoads: function(curRoom){
         /*
         ├ 	OwnedStructure 
@@ -89,6 +109,7 @@ module.exports = {
         
     },
     maxCreep: function(curRoom,role){
+        if (curRoom == null) { return false; }
         var target = curRoom.find(FIND_STRUCTURES, { filter: (structure) => { return (structure.structureType == STRUCTURE_CONTROLLER ); } });
         if (target[0]==null){ return false;}
         switch (target[0].level) {
@@ -239,7 +260,7 @@ module.exports = {
                             return 4;
                             break;
                         case ('claimer'):
-                            return 0;
+                            return 1;
                             break;
                         default:
                             return false;
@@ -261,7 +282,7 @@ module.exports = {
                             return 3;
                             break;
                         case ('claimer'):
-                            return 0;
+                            return 1;
                             break;
                         default:
                             return false;

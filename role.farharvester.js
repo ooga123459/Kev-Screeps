@@ -100,7 +100,7 @@ var roleMulti = {
                             break;
                         }
                     }
-                } else {
+                } else if (sources[creep.memory.harSource].energy==0 || creep.carry.energy==creep.carry.energyCapacity) {
                     //No source energy avail, attempt to work
                     creep.memory.working = true;
                     creep.memory.harSource = -1;

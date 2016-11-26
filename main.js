@@ -4,7 +4,6 @@ var roleMulti = require('role.multi');
 var roleRepair = require('role.repair');
 var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
-var newCostMatrix = require('newCostMatrix');
 var roleClaimer = require('role.claimer');
 
 var tower = require('tower');
@@ -20,14 +19,13 @@ module.exports.loop = function () {
         var curRoom = Game.rooms[rm]
         var spawn = curRoom.find(FIND_STRUCTURES, {filter: { structureType: STRUCTURE_SPAWN } })
         helper.buildRoads(curRoom);
+        
         var multi = _.filter(Game.creeps, (creep) => creep.memory.role == 'multi' && curRoom.name == creep.room.name);
         var repair = _.filter(Game.creeps, (creep) => creep.memory.role == 'repair' && curRoom.name == creep.room.name);
         var harvester = _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester' && curRoom.name == creep.room.name);
         var upgrader = _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader' && curRoom.name == creep.room.name);
         var claimer = _.filter(Game.creeps, (creep) => creep.memory.role == 'claimer' && curRoom.name == creep.room.name);
         if (spawn[0] != null) {
-            newCostMatrix.run(spawn[0]);
-            
             var creepType = '';
             var cnt = 0;
             
@@ -43,7 +41,7 @@ module.exports.loop = function () {
             if (creepType!=''){
                 var cnt = 0;
                 for (var i = 1; i<=helper.maxCreep(curRoom,creepType); i++){
-                    if(!Game.creeps[curRoom.name + '.' + helper.toTitleCase(creepType) + String(i)]) {
+                    if(Game.creeps[curRoom.name + '.' + helper.toTitleCase(creepType) + String(i)]==null) {
                         cnt = i;
                         break;
                     }

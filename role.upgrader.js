@@ -62,7 +62,7 @@ var roleMulti = {
                     if(creep.harvest(sources[creep.memory.harSource]) == ERR_NOT_IN_RANGE) {
                         creep.moveTo(sources[creep.memory.harSource]);
                     }
-                } else {
+                } else if (sources[creep.memory.harSource].energy==0 || creep.carry.energy==creep.carry.energyCapacity) {
                     //No source energy avail, attempt to work
                     creep.memory.working = true;
                     creep.memory.harSource = -1;
