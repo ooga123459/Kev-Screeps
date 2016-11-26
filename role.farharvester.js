@@ -4,6 +4,28 @@ var roleMulti = {
 
     /** @param {Creep} creep **/
     run: function(creep) {
+        /*var exits = Game.map.describeExits(creep.room.name)
+        var totExits = 4;
+        console.log('Exits: ' + totExits)
+        for (var x in exits){
+            for (var r in Game.rooms) {
+                if (Game.rooms[r].name == exits[x]) {
+                    delete exits[x];
+                    totExits -= 1;
+                    break;
+                }
+            }
+        }
+        console.log(creep.room.name + ' Exits: ' + totExits)*/
+        
+        /*for (var i = 0; i < 50; i++) {
+            var ter = Game.map.getTerrainAt(0,i,creep.room.name);
+            if (ter == plain || ter == swamp) {
+                
+            }
+        }*/
+        
+        
         if(creep.carry.energy == 0){
             creep.memory.working = false;
         }
@@ -44,8 +66,9 @@ var roleMulti = {
                     }
                 }
                 //console.log('LowestCreepSource: ' +lowestCreepSource)
-                creep.memory.harSource = lowestCreepSource;
-                
+                if(creep.memory.harSource == -1 || sources[creep.memory.harSource].energy==0){
+                    creep.memory.harSource = lowestCreepSource;
+                }
                 var sourceFound = false;
                 for (i = 0; i < sources.length; i++) {
                     if (sources[i].energy > 0) {

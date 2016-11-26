@@ -28,6 +28,9 @@ module.exports = {
         var structs = curRoom.find(FIND_STRUCTURES, { filter: (s) => { return (s.structureType == STRUCTURE_CONTROLLER || s.structureType == STRUCTURE_EXTENSION || s.structureType == STRUCTURE_EXTRACTOR || s.structureType == STRUCTURE_LAB
                                                                                  || s.structureType == STRUCTURE_LINK || s.structureType == STRUCTURE_NUKER || s.structureType == STRUCTURE_SPAWN || s.structureType == STRUCTURE_STORAGE
                                                                                  || s.structureType == STRUCTURE_TERMINAL || s.structureType == STRUCTURE_TOWER || s.structureType == STRUCTURE_CONTAINER); } });
+        if (structs.length == 1) {
+            return false;
+        }
         var sources = curRoom.find(FIND_SOURCES);
     
         var positions = structs.concat(sources);
@@ -40,9 +43,26 @@ module.exports = {
             //console.log('1: '+positions[randOne] + ', 2: ' +positions[randTwo])
             var path = curRoom.findPath(positions[randOne].pos,positions[randTwo].pos, {ignoreRoads: true, heuristicWeight: 1000});
             for (var i in path){
-                var cons = curRoom.createConstructionSite(path[i].x,path[i].y,STRUCTURE_ROAD);
-                if (cons == ERR_FULL){
-                    break;
+                var strucs = curRoom.lookForAt(LOOK_STRUCTURES, path[i].x,path[i].y)
+                var consites = curRoom.lookForAt(LOOK_CONSTRUCTION_SITES,path[i].x,path[i].y)
+                //console.log('structs: '+ strucs + '  cons:' + consites)
+                if (strucs.length==0 && consites.length==0){
+                    var cons = curRoom.createConstructionSite(path[i].x,path[i].y,STRUCTURE_ROAD);
+                    if (cons == ERR_FULL){
+                        break;
+                    }
+                } else {
+                    var target = curRoom.find(FIND_STRUCTURES, { filter: (s) => { return (s.pos.x == path[i].x && s.pos.y == path[i].y ); } });
+                    if (target.length>1){
+                        for (var t in target) {
+                            if(target[t].structureType == STRUCTURE_ROAD){ 
+                                console.log('Destroying road @ '+ curRoom.name + ': ' +path[i].x+','+path[i].y);
+                                target[t].destroy();
+                            }
+                        }
+                    }
+                    
+                    return false;
                 }
             }
             return true;
